@@ -1,0 +1,25 @@
+{
+  "name": "to_do_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarkoNS1990/to_do_app.git"
+  },
+  "author": "Marko Zecevic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarkoNS1990/to_do_app/issues"
+  },
+  "homepage": "https://github.com/MarkoNS1990/to_do_app#readme",
+  "devDependencies": {
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0"
+  }
+}
