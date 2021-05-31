@@ -1,4 +1,4 @@
-
+import {addNewTask} from './task'
 
 class Project{
     constructor(name){
@@ -33,7 +33,7 @@ const addNewProject = (()=>{
                 <button class='btn btn-danger'>Delete</button>
             </div>
             <div class='card-body'>
-                    
+
             </div>
         `
         content.appendChild(card)
