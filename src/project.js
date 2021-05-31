@@ -6,6 +6,15 @@ class Project{
     }
 }
 
+let myTasks = []
+class Task{
+    constructor(name,date,priority){
+        this.name = name
+        this.date = date
+        this.priority = priority
+    }
+}
+
 const addNewProject = (()=>{
     
     const content = document.querySelector('#content')
@@ -18,7 +27,7 @@ const addNewProject = (()=>{
     content.appendChild(nameInput)
     content.appendChild(addButton)
     
-    // event listener for addButton
+    // event listener for add project Button
     addButton.addEventListener('click',()=>{
         const myProject = new Project(nameInput.value)
 
@@ -26,20 +35,68 @@ const addNewProject = (()=>{
         card.classList.add('card')
 
         card.innerHTML = `
-            
             <div class='card-title'>
                 ${myProject.name}
                 <button class='btn btn-success addBtn'>Add</button>
-                <button class='btn btn-danger'>Delete</button>
             </div>
             <div class='card-body'>
-
+                
             </div>
+            
         `
+        
         content.appendChild(card)
         nameInput.value=''
-        console.log(myProject);
+        
+        const addBtn = document.querySelector('.addBtn')
+        addBtn.addEventListener('click',()=>{
+            const cardBody = document.querySelector('.card-body')
+            cardBody.innerHTML += `
+            <form type='submit'>   
+            <input type='text' placeholder='enter a task' class='form-control taskInput'>
+                <input type='date' class='dateInput'> 
+                <select name='priority' class='priority'>
+                    <option value='low'>Low</option>
+                    <option value='high'>High</option>
+                </select> 
+            <button type ='submit' class='btn btn-secondary submitForm'>Submit</button>
+            </form> 
+            `
+            const submitForm = document.querySelector('.submitForm')
+            const taskInput = document.querySelector('.taskInput')
+            const priority = document.querySelector('.priority')
+            const dateInput = document.querySelector('.dateInput')
+            submitForm.addEventListener('click',(e)=>{
+                e.preventDefault()
+                const myTask = new Task(taskInput.value,dateInput.value,priority.value)
+                myTasks.push(myTask)
+                setDisplayNone(taskInput,dateInput,priority,submitForm)
+                console.log(myTasks);
+                myTasks.indexOf((task)=>{
+                    cardBody.innerHTML =`
+                    ${task.name} ${task.date} ${task.priority}
+                `
+                })
+                
+                
+
+            })
+
+            
+        })
     })
 })()
+
+const setDisplayNone = (name,date,priority,button)=>{
+    name.style.display ='none'
+    date.style.display ='none'
+    priority.style.display ='none'
+    button.style.display = 'none'
+}
+
+
+ 
+
+
 
 export default {addNewProject}
