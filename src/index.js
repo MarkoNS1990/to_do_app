@@ -1,2 +1,1 @@
-console.log('Hola');
-console.log('ffsssss!');
+import {addNewProject} from './project'
