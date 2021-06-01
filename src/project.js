@@ -28,12 +28,17 @@ const addNewProject = (()=>{
     const content = document.querySelector('#content')
     const nameInput = document.createElement('input')
     const addButton = document.createElement('button')
-
+    const div = document.createElement('div')
+    div.classList.add('d-flex')
+    div.appendChild(addButton)
+    div.appendChild(nameInput)
+    
     nameInput.classList.add('form-control')
-    addButton.classList.add('btn', 'btn-primary')
-    addButton.innerText='Add Project'
-    content.appendChild(nameInput)
-    content.appendChild(addButton)
+    nameInput.placeholder='Enter project name'
+    addButton.classList.add('btn', 'btn-primary','my-button')
+    addButton.innerText='+'
+    content.appendChild(div)
+    
     
     // event listener for add project Button
     addButton.addEventListener('click',()=>{
@@ -95,20 +100,24 @@ const addNewProject = (()=>{
             const priority = document.querySelector(`[data='${priorityId}']`)
             const dateInput = document.querySelector(`[data='${dateId}']`)
             
+            
             submitForm.addEventListener('click',(e)=>{
                 e.preventDefault()
-                
-                const myTask = new Task(taskInput.value,dateInput.value,priority.value)
+                if(taskInput.value === '' || dateInput.value === ''){
+                    alert('Please fill in all fields')
+                    console.log('ffs');
+                }else{
+                    const myTask = new Task(taskInput.value,dateInput.value,priority.value)
                 
                 myProject.tasks.push(myTask)
                 setDisplayNone(taskInput,dateInput,priority,submitForm)
                 const itemId = uuidv4()
-                const deleteId = uuidv4()
+                
                 
                 myProject.tasks.forEach((task)=>{
                     
                     cardBody.innerHTML +=`
-                    <div class='card-item' data=${itemId}><button class='btn btn-danger deleteBtn' data=${task.id}>Delete</button> ${task.name} ${task.date} priority: ${task.priority}</div>
+                    <div class='card-item' data=${itemId}>${task.name} | Due date: ${task.date} | priority: ${task.priority}<button class='btn btn-danger deleteBtn' data=${task.id}>Delete</button></div>
                 `
                     
                  })
@@ -117,16 +126,22 @@ const addNewProject = (()=>{
                 const deleteBtn = document.querySelector('.deleteBtn')
                 
                 
-                
-                deleteBtn.addEventListener('click',(e)=>{
-                       console.log(e.target); 
-                       const index = myProject.tasks.indexOf(myTask)
-                       
-                       myProject.tasks.splice(index,1)
-                       e.target.parentElement.remove()
-                    
-                       
+                document.querySelectorAll('.deleteBtn').forEach((button)=>{
+                    console.log(button);
+                    button.addEventListener('click',(e)=>{
+                        console.log(e.target); 
+                        const index = myProject.tasks.indexOf(myTask)
+                        
+                        myProject.tasks.splice(index,1)
+                        e.target.parentElement.remove()
+                     
+                        
+                 })
                 })
+                }
+    
+                
+                
                 
                 
 
