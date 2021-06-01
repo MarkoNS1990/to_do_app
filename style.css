@@ -17,6 +17,11 @@
   font-weight: bold;
 }
 
+.my-button {
+  font-size: 50px;
+  padding: 0px 20px;
+}
+
 .card {
   background-color: beige;
 }
