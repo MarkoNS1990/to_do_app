@@ -1,9 +1,11 @@
 import {addNewTask} from './task'
-
+let myProjects = []
 class Project{
     constructor(name){
         this.name = name
+        
     }
+
 }
 
 let myTasks = []
@@ -30,13 +32,15 @@ const addNewProject = (()=>{
     // event listener for add project Button
     addButton.addEventListener('click',()=>{
         const myProject = new Project(nameInput.value)
-
+        myProjects.push(myProject)
+        console.log( myProject.__proto__.constructor.name);
         const card = document.createElement('div')
         card.classList.add('card')
 
-        card.innerHTML = `
+        myProjects.forEach((project)=>{
+            card.innerHTML = `
             <div class='card-title'>
-                ${myProject.name}
+                ${project.name}
                 <button class='btn btn-success addBtn'>Add</button>
             </div>
             <div class='card-body'>
@@ -44,6 +48,9 @@ const addNewProject = (()=>{
             </div>
             
         `
+        })
+
+        
         
         content.appendChild(card)
         nameInput.value=''
@@ -51,7 +58,7 @@ const addNewProject = (()=>{
         const addBtn = document.querySelector('.addBtn')
         addBtn.addEventListener('click',()=>{
             const cardBody = document.querySelector('.card-body')
-            cardBody.innerHTML += `
+            cardBody.innerHTML = `
             <form type='submit'>   
             <input type='text' placeholder='enter a task' class='form-control taskInput'>
                 <input type='date' class='dateInput'> 
@@ -72,9 +79,9 @@ const addNewProject = (()=>{
                 myTasks.push(myTask)
                 setDisplayNone(taskInput,dateInput,priority,submitForm)
                 console.log(myTasks);
-                myTasks.indexOf((task)=>{
-                    cardBody.innerHTML =`
-                    ${task.name} ${task.date} ${task.priority}
+                myTasks.forEach((task)=>{
+                    cardBody.innerHTML +=`
+                    <p class='card-item'>${task.name} ${task.date} ${task.priority}</p>
                 `
                 })
                 
