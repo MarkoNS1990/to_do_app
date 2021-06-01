@@ -71,8 +71,9 @@ const addNewProject = (()=>{
             const cardBody = document.querySelector(`[data='${cardBodyId}']`)
 
             cardBody.innerHTML = `
-            <form type='submit'>   
-            <input type='text' placeholder='enter a task' class='form-control taskInput' data=${inputId}>
+            <form type='submit'>
+                  
+                <input type='text' placeholder='enter a task' class='form-control taskInput' data=${inputId}>
                 <input type='date' class='dateInput' data=${dateId}> 
                 <select name='priority' class='priority' data=${priorityId}>
                     <option value='low'>Low</option>
@@ -96,8 +97,15 @@ const addNewProject = (()=>{
                 
                 myProject.tasks.forEach((task)=>{
                     cardBody.innerHTML +=`
-                    <p class='card-item'>${task.name} ${task.date} ${task.priority}</p>
+                    <p class='card-item'><input type='checkbox' class='checked'> ${task.name} ${task.date} ${task.priority}</p>
                 `
+                })
+                const checked =document.querySelector('.checked')
+                const cardItem = document.querySelector('.card-item')
+                
+                checked.addEventListener('change',()=>{
+                    
+                    checked.checked===true? cardItem.style.textDecoration='line-through':cardItem.style.textDecoration='none'
                 })
                 
                 
