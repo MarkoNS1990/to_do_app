@@ -1,5 +1,8 @@
 /* card */
 
 .card-body {
-  display: flex;
+}
+
+.card-item {
+  border: 1px solid black;
 }
