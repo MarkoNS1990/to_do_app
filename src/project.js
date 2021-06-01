@@ -23,6 +23,42 @@ class Task{
     }
 }
 
+const storeProjectInLocalStorage=(project)=>{
+    let projects
+    if(localStorage.getItem('projects')===null){
+        projects=[]
+    }else{
+        projects = JSON.parse(localStorage.getItem('projects'))
+    }
+    projects.push(project)
+    localStorage.setItem('projects',JSON.stringify(projects))
+}
+
+const storeTaskInLocalStorage=(task,project)=>{
+    
+    const projects = JSON.parse(localStorage.getItem('projects'))
+    
+    
+   const mapped = projects.forEach((proj)=>{
+        if(project.head_id===proj.head_id){
+            
+            project.tasks.push(task)
+            console.log(project);
+            const newProjects = [...projects]
+            
+            newProjects.push(project)
+            localStorage.clear()
+            localStorage.setItem('projects',JSON.stringify(newProjects))
+        }
+    })
+    
+    // const arr = JSON.parse(projects)
+    // arr.tasks.push(task)
+}
+
+
+
+
 const addNewProject = (()=>{
     
     const content = document.querySelector('#content')
@@ -49,8 +85,9 @@ const addNewProject = (()=>{
         }else{
             const myProject = new Project(nameInput.value)
             
-            myProjects.push(myProject)
             
+            storeProjectInLocalStorage(myProject)
+            const myProjects = JSON.parse(localStorage.getItem('projects'))
             const card = document.createElement('div')
             card.classList.add('card')
         
@@ -109,36 +146,42 @@ const addNewProject = (()=>{
                 }else{
                     const myTask = new Task(taskInput.value,dateInput.value,priority.value)
                 
-                myProject.tasks.push(myTask)
-                setDisplayNone(taskInput,dateInput,priority,submitForm)
-                const itemId = uuidv4()
-                
-                
-                myProject.tasks.forEach((task)=>{
-                    
-                    cardBody.innerHTML +=`
-                    <div class='card-item' data=${itemId}>${task.name} | Due date: ${task.date} | priority: ${task.priority}<button class='btn btn-danger deleteBtn' data=${task.id}>Delete</button></div>
-                `
-                    
-                 })
-                
-
-                const deleteBtn = document.querySelector('.deleteBtn')
-                
-                
-                document.querySelectorAll('.deleteBtn').forEach((button)=>{
-                    console.log(button);
-                    button.addEventListener('click',(e)=>{
-                        console.log(e.target); 
-                        const index = myProject.tasks.indexOf(myTask)
+                console.log(myProjects);
+                myProjects.forEach((proj)=>{
+                    if(proj.head_id==myProject.head_id){
                         
-                        myProject.tasks.splice(index,1)
-                        e.target.parentElement.remove()
-                     
+                        storeTaskInLocalStorage(myTask,myProject)
+                        setDisplayNone(taskInput,dateInput,priority,submitForm)
+                        const itemId = uuidv4()
+                    
+                    
+                    myProject.tasks.forEach((task)=>{
                         
-                 })
+                        cardBody.innerHTML +=`
+                        <div class='card-item' data=${itemId}>${task.name} | Due date: ${task.date} | priority: ${task.priority}<button class='btn btn-danger deleteBtn' data=${task.id}>Delete</button></div>
+                    `
+                        
+                     })
+                
+                    
+                    
+                    document.querySelectorAll('.deleteBtn').forEach((button)=>{
+                        console.log(button);
+                        button.addEventListener('click',(e)=>{
+                            console.log(e.target); 
+                            const index = myProject.tasks.indexOf(myTask)
+                            
+                            myProject.tasks.splice(index,1)
+                            e.target.parentElement.remove()
+                         
+                            
+                     })
+                    })
+                    }  
                 })
-                }
+                
+                }  
+                
     
                 
                 
