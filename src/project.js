@@ -1,11 +1,12 @@
-import {addNewTask} from './task'
+import task, {addNewTask} from './task'
 import { v4 as uuidv4 } from 'uuid';
 let myProjects = []
 class Project{
     constructor(name){
         this.name = name
         this.tasks = []
-        this.id = uuidv4()
+        this.head_id = uuidv4()
+        this.body_id = uuidv4()
     }
     
 
@@ -17,7 +18,8 @@ class Task{
         this.name = name
         this.date = date
         this.priority = priority
-        this.id=uuidv4()
+        this.id = uuidv4()
+        this.completed = false
     }
 }
 
@@ -35,19 +37,25 @@ const addNewProject = (()=>{
     
     // event listener for add project Button
     addButton.addEventListener('click',()=>{
-        const myProject = new Project(nameInput.value)
-        myProjects.push(myProject)
         
-        const card = document.createElement('div')
-        card.classList.add('card')
         
-        const cardBodyId = uuidv4()
+        if(nameInput.value == ''){
+            alert('Put the project name please')
+        }else{
+            const myProject = new Project(nameInput.value)
+            
+            myProjects.push(myProject)
+            
+            const card = document.createElement('div')
+            card.classList.add('card')
+        
+            const cardBodyId = uuidv4()
 
-        myProjects.forEach((project)=>{
+            myProjects.forEach((project)=>{
             card.innerHTML = `
             <div class='card-title'>
-                ${project.name}
-                <button class='btn btn-success addBtn' data=${myProject.id}>Add</button>
+               <p class='heading'>Project name: ${project.name}</p> 
+                <button class='btn btn-success addBtn' data=${myProject.head_id}>Add task</button>
             </div>
             <div class='card-body' data=${cardBodyId}>
                 
@@ -59,11 +67,11 @@ const addNewProject = (()=>{
         content.appendChild(card)
         nameInput.value=''
         
-        const addBtn = document.querySelector(`[data='${myProject.id}']`)
+        const addBtn = document.querySelector(`[data='${myProject.head_id}']`)
         
-        addBtn.addEventListener('click',()=>{
-            console.log(addBtn);
-            console.log(myProject);
+        
+        addBtn.addEventListener('click',(e)=>{
+            
             const submitId = uuidv4()
             const inputId = uuidv4()
             const priorityId = uuidv4()
@@ -94,18 +102,30 @@ const addNewProject = (()=>{
                 
                 myProject.tasks.push(myTask)
                 setDisplayNone(taskInput,dateInput,priority,submitForm)
+                const itemId = uuidv4()
+                const deleteId = uuidv4()
                 
                 myProject.tasks.forEach((task)=>{
-                    cardBody.innerHTML +=`
-                    <p class='card-item'><input type='checkbox' class='checked'> ${task.name} ${task.date} ${task.priority}</p>
-                `
-                })
-                const checked =document.querySelector('.checked')
-                const cardItem = document.querySelector('.card-item')
-                
-                checked.addEventListener('change',()=>{
                     
-                    checked.checked===true? cardItem.style.textDecoration='line-through':cardItem.style.textDecoration='none'
+                    cardBody.innerHTML +=`
+                    <div class='card-item' data=${itemId}><button class='btn btn-danger deleteBtn' data=${task.id}>Delete</button> ${task.name} ${task.date} priority: ${task.priority}</div>
+                `
+                    
+                 })
+                
+
+                const deleteBtn = document.querySelector('.deleteBtn')
+                
+                
+                
+                deleteBtn.addEventListener('click',(e)=>{
+                       console.log(e.target); 
+                       const index = myProject.tasks.indexOf(myTask)
+                       
+                       myProject.tasks.splice(index,1)
+                       e.target.parentElement.remove()
+                    
+                       
                 })
                 
                 
@@ -114,7 +134,7 @@ const addNewProject = (()=>{
 
             
         })
-    })
+}})
 })()
 
 const setDisplayNone = (name,date,priority,button)=>{
@@ -130,6 +150,9 @@ const setDisplayBlock = (name,date,priority,button)=>{
     priority.style.display ='block'
     button.style.display = 'block'
 }
+
+
+
 
 
  
