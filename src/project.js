@@ -1,4 +1,3 @@
-import task, {addNewTask} from './task'
 import { v4 as uuidv4 } from 'uuid';
 let myProjects = []
 class Project{
@@ -7,11 +6,8 @@ class Project{
         this.tasks = []
         this.head_id = uuidv4()
         this.body_id = uuidv4()
-    }
-    
-
+    }  
 }
-
 
 class Task{
     constructor(name,date,priority){
@@ -39,21 +35,32 @@ const storeTaskInLocalStorage=(task,project)=>{
     const projects = JSON.parse(localStorage.getItem('projects'))
     
     
-   const mapped = projects.forEach((proj)=>{
+   projects.forEach((proj)=>{
         if(project.head_id===proj.head_id){
+            proj.tasks.push(task)
             
-            project.tasks.push(task)
-            console.log(project);
-            const newProjects = [...projects]
-            
-            newProjects.push(project)
-            localStorage.clear()
-            localStorage.setItem('projects',JSON.stringify(newProjects))
+            localStorage.removeItem('projects')
+            localStorage.setItem('projects',JSON.stringify(projects))
         }
     })
     
-    // const arr = JSON.parse(projects)
-    // arr.tasks.push(task)
+    
+}
+
+const removeProjectFromLocalStorage = (project)=>{
+   const projects = JSON.parse(localStorage.getItem('projects'))
+    
+    
+   projects.forEach((proj)=>{
+        if(project.head_id===proj.head_id){
+            console.log(proj);
+            console.log(projects);
+           const index =  projects.indexOf(proj)
+            projects.splice(index,1)
+            localStorage.removeItem('projects')
+            localStorage.setItem('projects',JSON.stringify(projects))
+        }
+    })
 }
 
 
@@ -75,6 +82,8 @@ const addNewProject = (()=>{
     addButton.innerText='+'
     content.appendChild(div)
     
+
+    
     
     // event listener for add project Button
     addButton.addEventListener('click',()=>{
@@ -85,19 +94,21 @@ const addNewProject = (()=>{
         }else{
             const myProject = new Project(nameInput.value)
             
-            
             storeProjectInLocalStorage(myProject)
             const myProjects = JSON.parse(localStorage.getItem('projects'))
+            
             const card = document.createElement('div')
             card.classList.add('card')
         
             const cardBodyId = uuidv4()
-
+            const deleteId = uuidv4()
             myProjects.forEach((project)=>{
+                
             card.innerHTML = `
             <div class='card-title'>
                <p class='heading'>Project name: ${project.name}</p> 
                 <button class='btn btn-success addBtn' data=${myProject.head_id}>Add task</button>
+                <button class='btn btn-danger deleteProjectBtn' data=${myProject.body_id}>Delete project</button>
             </div>
             <div class='card-body' data=${cardBodyId}>
                 
@@ -105,10 +116,17 @@ const addNewProject = (()=>{
             
         `
         })
-
-        content.appendChild(card)
-        nameInput.value=''
         
+        
+        content.appendChild(card)
+        const deleteBtn = document.querySelector(`[data='${myProject.body_id}']`)
+        
+        nameInput.value=''
+        // Event for deleting project
+        deleteBtn.addEventListener('click',(e)=>{
+             removeProjectFromLocalStorage(myProject)
+            e.target.parentElement.parentElement.remove()
+        })
         const addBtn = document.querySelector(`[data='${myProject.head_id}']`)
         
         
@@ -146,48 +164,47 @@ const addNewProject = (()=>{
                 }else{
                     const myTask = new Task(taskInput.value,dateInput.value,priority.value)
                 
-                console.log(myProjects);
+                
                 myProjects.forEach((proj)=>{
                     if(proj.head_id==myProject.head_id){
                         
                         storeTaskInLocalStorage(myTask,myProject)
                         setDisplayNone(taskInput,dateInput,priority,submitForm)
+                        const myProjectWithTasks = JSON.parse(localStorage.getItem('projects'))
                         const itemId = uuidv4()
-                    
-                    
-                    myProject.tasks.forEach((task)=>{
+                        console.log(myProjectWithTasks); 
+                        myProjectWithTasks.forEach((myProj)=>{
+                            if(myProj.head_id == myProject.head_id){
+                                myProj.tasks.forEach((task)=>{
                         
-                        cardBody.innerHTML +=`
-                        <div class='card-item' data=${itemId}>${task.name} | Due date: ${task.date} | priority: ${task.priority}<button class='btn btn-danger deleteBtn' data=${task.id}>Delete</button></div>
-                    `
+                                    cardBody.innerHTML +=`
+                                    <div class='card-item' data=${itemId}>${task.name} | Due date: ${task.date} | priority: ${task.priority}<button class='btn btn-danger deleteBtn' data=${task.id}>Delete</button></div>
+                                `
+                                    
+                                 })
+                            
+                                
+                                
+                                document.querySelectorAll('.deleteBtn').forEach((button)=>{
+                                    
+                                    button.addEventListener('click',(e)=>{
+                                        
+                                        const index = myProject.tasks.indexOf(myTask)
+                                        
+                                        myProject.tasks.splice(index,1)
+                                        e.target.parentElement.remove()
+                                     
+                                        
+                                 })
+                                }) 
+                            }
+                        })
                         
-                     })
-                
-                    
-                    
-                    document.querySelectorAll('.deleteBtn').forEach((button)=>{
-                        console.log(button);
-                        button.addEventListener('click',(e)=>{
-                            console.log(e.target); 
-                            const index = myProject.tasks.indexOf(myTask)
-                            
-                            myProject.tasks.splice(index,1)
-                            e.target.parentElement.remove()
-                         
-                            
-                     })
-                    })
                     }  
                 })
                 
                 }  
-                
-    
-                
-                
-                
-                
-
+              
             })
 
             
