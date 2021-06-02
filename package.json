@@ -19,6 +19,10 @@
   },
   "homepage": "https://github.com/MarkoNS1990/to_do_app#readme",
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4",
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.0"
   },
