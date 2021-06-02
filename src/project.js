@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import Task from './task';
 
-const allProjects = [{ name: 'Default project' }];
+const allProjects = [{ name: 'Example project',tasks:[{name:'example task'}] }];
 class Project {
   constructor(name) {
     this.name = name;
@@ -73,11 +73,24 @@ const addNewProject = (() => {
   // listener for loading projects on start
   window.onload = (() => {
     const projects = JSON.parse(localStorage.getItem('projects'));
+    const card = document.createElement('div')
+    card.classList.add('card')
     const div = document.createElement('div');
     div.innerHTML = `
       In total there are ${projects.length} projects in the LocalStorage.
+
     `;
+    card.innerHTML =`<div class='card-title'>
+    <p class='heading'>Project name: ${allProjects[0].name}</p> 
+     <button class='btn btn-success disabled addBtn' }>Add task</button>
+     <button class='btn btn-danger disabled deleteProjectBtn' data=$>Delete project</button>
+    </div>
+    <div class='card-body'>
+    <div class='card-item'}>${allProjects[0].tasks[0].name} | Due date: 01-01-2022 | priority: high <button class='btn btn-danger deleteBtn disabled'>Delete</button></div>
+    </div>`
+    console.log(allProjects[0].tasks[0].name);
     content.appendChild(div);
+    content.appendChild(card);
   });
 
   // event listener for add project Button
