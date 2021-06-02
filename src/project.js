@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import Task from './task';
 
+const allProjects = [{ name: 'Default project' }];
 class Project {
   constructor(name) {
     this.name = name;
@@ -70,22 +71,28 @@ const addNewProject = (() => {
   content.appendChild(div);
 
   // listener for loading projects on start
-  window.onload = (()=>{
+  window.onload = (() => {
     const projects = JSON.parse(localStorage.getItem('projects'));
-    const div = document.createElement('div')
+    const div = document.createElement('div');
     div.innerHTML = `
       In total there are ${projects.length} projects in the LocalStorage.
-    `
-    content.appendChild(div)
-  })
+    `;
+    content.appendChild(div);
+  });
 
   // event listener for add project Button
   addButton.addEventListener('click', () => {
     if (nameInput.value === '') {
-      alert('Put the project name please');
+      const errDiv = document.createElement('div');
+      errDiv.innerText = 'Please fill in the name of the project';
+      errDiv.classList.add('error');
+      content.appendChild(errDiv);
+      setTimeout(() => {
+        errDiv.innerText = '';
+      }, 3000);
     } else {
       const myProject = new Project(nameInput.value);
-
+      allProjects.push(myProject);
       storeProjectInLocalStorage(myProject);
       const myProjects = JSON.parse(localStorage.getItem('projects'));
 
@@ -94,7 +101,7 @@ const addNewProject = (() => {
 
       const cardBodyId = uuidv4();
 
-      myProjects.forEach((project) => {
+      allProjects.forEach((project) => {
         card.innerHTML = `
             <div class='card-title'>
                <p class='heading'>Project name: ${project.name}</p> 
@@ -146,7 +153,13 @@ const addNewProject = (() => {
         submitForm.addEventListener('click', (e) => {
           e.preventDefault();
           if (taskInput.value === '' || dateInput.value === '') {
-            alert('Please fill in all fields');
+            const errDiv = document.createElement('div');
+            errDiv.innerText = 'Please fill all the fields.';
+            errDiv.classList.add('error');
+            content.appendChild(errDiv);
+            setTimeout(() => {
+              errDiv.innerText = '';
+            }, 3000);
           } else {
             const myTask = new Task(taskInput.value, dateInput.value, priority.value);
 
