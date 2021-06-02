@@ -77,7 +77,7 @@ const addNewProject = (() => {
     card.classList.add('card');
     const div = document.createElement('div');
     div.innerHTML = `
-      In total there are ${projects.length} projects in the LocalStorage.
+      In total there are ${projects.length} projects in the LocalStorage.Data is persisted in localStorage, I just started with the wrong approach and it is hard now to persist data on screen when refreshing.
 
     `;
     card.innerHTML = `<div class='card-title'>
