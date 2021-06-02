@@ -26,7 +26,7 @@ You can also delete each task or project.I used LocalStorage for storing the dat
 
 ### Deployment
 
-This application is deployed on [GitHubPages](https://markons1990.github.io/restaurant/).
+This application is deployed on [GitHubPages](https://markons1990.github.io/to_do_app/).
 
 ## Author
 
