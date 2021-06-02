@@ -69,6 +69,16 @@ const addNewProject = (() => {
   addButton.innerText = '+';
   content.appendChild(div);
 
+  // listener for loading projects on start
+  window.onload = (()=>{
+    const projects = JSON.parse(localStorage.getItem('projects'));
+    const div = document.createElement('div')
+    div.innerHTML = `
+      In total there are ${projects.length} projects in the LocalStorage.
+    `
+    content.appendChild(div)
+  })
+
   // event listener for add project Button
   addButton.addEventListener('click', () => {
     if (nameInput.value === '') {
