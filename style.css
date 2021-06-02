@@ -25,3 +25,8 @@
 .card {
   background-color: beige;
 }
+
+.error {
+  background-color: red;
+  color: #fff;
+}
