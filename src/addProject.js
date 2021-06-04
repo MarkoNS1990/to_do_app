@@ -204,4 +204,4 @@ const removeProjectFromLocalStorage = (project) => {
   });
 })();
 
-export {addNewProject,Project}
+export {addNewProject,Project,storeProjectInLocalStorage}

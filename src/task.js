@@ -6,6 +6,5 @@ export default class Task {
     this.date = date;
     this.priority = priority;
     this.id = uuidv4();
-    this.completed = false;
   }
 }
