@@ -16,13 +16,18 @@ You can also delete each task or project.I used LocalStorage for storing the dat
 - Open the terminal in the directory where you want to install the app;
 - Run command `https://github.com/MarkoNS1990/to_do_app` which will clone the project;
 - Switch to the main directory of project using cd;
-- Run `npm/yarn install webpack webpack-cli --save-dev` in your computer terminal to install Webpack (you will need Node.js installed on your machine);
+- Run `npm install webpack webpack-cli --save-dev` in your computer terminal to install Webpack (you will need Node.js installed on your machine);
 - Open index.html file in your browser;
 - Use it.
 
 ## Screenshot
 
 ![](ss.JPG)
+
+### Testing
+
+-`npm install jest` to install jest for testing purposes.
+-Run `npm run test`.
 
 ### Deployment
 
