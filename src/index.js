@@ -1,1 +1,1 @@
-import {addNewProject} from './project'
+import {addNewProject} from './addProject'
