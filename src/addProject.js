@@ -4,7 +4,6 @@ import Project from './project';
 
 const allProjects = [{ name: 'Example project', tasks: [{ name: 'example task' }] }];
 
-
 const setDisplayNone = (name, date, priority, button) => {
   name.style.display = 'none';
   date.style.display = 'none';
@@ -49,7 +48,7 @@ const removeProjectFromLocalStorage = (project) => {
   });
 };
 
- const addNewProject = (() => {
+const addNewProject = (() => {
   const content = document.querySelector('#content');
   const nameInput = document.createElement('input');
   const addButton = document.createElement('button');
@@ -204,4 +203,4 @@ const removeProjectFromLocalStorage = (project) => {
   });
 })();
 
-export {addNewProject,Project,storeProjectInLocalStorage}
+export { addNewProject, Project, storeProjectInLocalStorage };
