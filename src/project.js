@@ -8,3 +8,5 @@ export default class Project {
       this.body_id = uuidv4();
     }
   }
+const task = new Project('Project')
+console.log(task.tasks);
