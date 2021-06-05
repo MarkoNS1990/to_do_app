@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import Task from './task';
 import Project from './project';
-
+import deleteTask from './deleteTask';
 
 const setDisplayNone = (name, date, priority, button) => {
   name.style.display = 'none';
@@ -46,6 +46,8 @@ const removeProjectFromLocalStorage = (project) => {
     }
   });
 };
+
+
 
 const addNewProject = (() => {
   const content = document.querySelector('#content');
@@ -185,9 +187,7 @@ const addNewProject = (() => {
 
                     document.querySelectorAll('.deleteBtn').forEach((button) => {
                       button.addEventListener('click', (e) => {
-                        const index = myProject.tasks.indexOf(myTask);
-
-                        myProject.tasks.splice(index, 1);
+                        deleteTask(myProject,myTask)
                         e.target.parentElement.remove();
                       });
                     });
@@ -202,4 +202,5 @@ const addNewProject = (() => {
   });
 })();
 
-export { addNewProject, storeProjectInLocalStorage };
+
+
