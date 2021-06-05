@@ -7,6 +7,11 @@ test('create task with valid inputs', () => {
   expect(task.priority).toBe('low');
 });
 
+test('create task with invalid inputs', () => {
+  const task = new Task('test');
+  expect(task.priority).toBeUndefined()
+});
+
 test('check if random id is created upon making a new task', () => {
   const task = new Task('test', '05-05-2020', 'low');
   expect(task.id).toBeDefined();

@@ -6,6 +6,11 @@ test('create project with valid inputs', () => {
   expect(project.name).toBe('test');
 });
 
+test('create project with invalid inputs', () => {
+  const project = new Project();
+  expect(project.priority).toBeUndefined();
+});
+
 test('check if random id is created upon making a new project', () => {
   const project = new Project('test');
   expect(project.head_id).toBeDefined();

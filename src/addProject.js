@@ -203,4 +203,4 @@ const addNewProject = (() => {
   });
 })();
 
-export { addNewProject, Project, storeProjectInLocalStorage };
+export { addNewProject, storeProjectInLocalStorage };

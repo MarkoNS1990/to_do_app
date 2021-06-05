@@ -8,3 +8,4 @@ export default class Task {
     this.id = uuidv4();
   }
 }
+
