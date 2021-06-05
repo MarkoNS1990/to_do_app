@@ -2,7 +2,6 @@ import { v4 as uuidv4 } from 'uuid';
 import Task from './task';
 import Project from './project';
 
-const allProjects = [{ name: 'Example project', tasks: [{ name: 'example task' }] }];
 
 const setDisplayNone = (name, date, priority, button) => {
   name.style.display = 'none';

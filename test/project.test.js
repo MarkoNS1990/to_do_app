@@ -29,3 +29,8 @@ test('check if tasks are added to project successfully', () => {
 
   expect(project.tasks).toHaveLength(1);
 });
+
+test('check for existence of default project', () => {
+  const project = new Project('test');
+  expect(project.allProjects[0].name).toEqual('Example project');
+});
