@@ -47,7 +47,30 @@ const removeProjectFromLocalStorage = (project) => {
   });
 };
 
+const proj = new Project();
+// listener for loading projects on start
+window.onload = (() => {
+  const content = document.querySelector('#content');
+  const projects = JSON.parse(localStorage.getItem('projects'));
+  const card = document.createElement('div');
+  card.classList.add('card');
+  const div = document.createElement('div');
+  div.innerHTML = `
+    In total there are ${projects.length} projects in the LocalStorage.Data is persisted in localStorage, I just started with the wrong approach and it is hard now to persist data on screen when refreshing.
 
+  `;
+  card.innerHTML = `<div class='card-title'>
+  <p class='heading'>Project name: ${proj.allProjects[0].name}</p> 
+   <button class='btn btn-success disabled addBtn' }>Add task</button>
+   <button class='btn btn-danger disabled deleteProjectBtn' data=$>Delete project</button>
+  </div>
+  <div class='card-body'>
+  <div class='card-item'}>${proj.allProjects[0].tasks[0].name} | Due date: 01-01-2022 | priority: high <button class='btn btn-danger deleteBtn disabled'>Delete</button></div>
+  </div>`;
+
+  content.appendChild(div);
+  content.appendChild(card);
+});
 
 const addNewProject = (() => {
   const content = document.querySelector('#content');
@@ -64,29 +87,6 @@ const addNewProject = (() => {
   addButton.innerText = '+';
   content.appendChild(div);
 
-  // listener for loading projects on start
-  window.onload = (() => {
-    const projects = JSON.parse(localStorage.getItem('projects'));
-    const card = document.createElement('div');
-    card.classList.add('card');
-    const div = document.createElement('div');
-    div.innerHTML = `
-      In total there are ${projects.length} projects in the LocalStorage.Data is persisted in localStorage, I just started with the wrong approach and it is hard now to persist data on screen when refreshing.
-
-    `;
-    card.innerHTML = `<div class='card-title'>
-    <p class='heading'>Project name: ${allProjects[0].name}</p> 
-     <button class='btn btn-success disabled addBtn' }>Add task</button>
-     <button class='btn btn-danger disabled deleteProjectBtn' data=$>Delete project</button>
-    </div>
-    <div class='card-body'>
-    <div class='card-item'}>${allProjects[0].tasks[0].name} | Due date: 01-01-2022 | priority: high <button class='btn btn-danger deleteBtn disabled'>Delete</button></div>
-    </div>`;
-
-    content.appendChild(div);
-    content.appendChild(card);
-  });
-
   // event listener for add project Button
   addButton.addEventListener('click', () => {
     if (nameInput.value === '') {
@@ -99,7 +99,7 @@ const addNewProject = (() => {
       }, 3000);
     } else {
       const myProject = new Project(nameInput.value);
-      allProjects.push(myProject);
+      proj.allProjects.push(myProject);
       storeProjectInLocalStorage(myProject);
       const myProjects = JSON.parse(localStorage.getItem('projects'));
 
@@ -108,7 +108,7 @@ const addNewProject = (() => {
 
       const cardBodyId = uuidv4();
 
-      allProjects.forEach((project) => {
+      proj.allProjects.forEach((project) => {
         card.innerHTML = `
             <div class='card-title'>
                <p class='heading'>Project name: ${project.name}</p> 
@@ -187,7 +187,7 @@ const addNewProject = (() => {
 
                     document.querySelectorAll('.deleteBtn').forEach((button) => {
                       button.addEventListener('click', (e) => {
-                        deleteTask(myProject,myTask)
+                        deleteTask(myProject, myTask);
                         e.target.parentElement.remove();
                       });
                     });
@@ -202,5 +202,4 @@ const addNewProject = (() => {
   });
 })();
 
-
-
+export default addNewProject;
