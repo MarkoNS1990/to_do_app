@@ -27,7 +27,9 @@ You can also delete each task or project.I used LocalStorage for storing the dat
 ### Testing
 
 -`npm install jest` to install jest for testing purposes.
--Run `npm run test`.
+-Run `npm run test test/project.test`. to run tests for Project.
+-Run `npm run test test/task.test` to run tests for Task.
+-Run `npm run test` to test everything.
 
 ### Deployment
 
